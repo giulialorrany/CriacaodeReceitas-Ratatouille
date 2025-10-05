@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Ratatouille" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/laranja_energetico</item>
+        <item name="colorOnPrimary">@color/branco_puro</item>
+        <item name="android:textColorPrimary">@color/branco_puro</item>
+    </style>
+
+    <style name="Theme.Ratatouille" parent="Base.Theme.Ratatouille" />
+
+    <style name="BottomNavTextStyle" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Fundo branco -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/verde_erva"/>
+        </shape>
+    </item>
+
+    <!-- Linha superior laranja -->
+    <item android:gravity="top">
+        <shape android:shape="rectangle">
+            <size android:height="2dp"/>   <!-- altura da linha -->
+            <solid android:color="@color/laranja_energetico"/>
+        </shape>
+    </item>
+
+</layer-list>

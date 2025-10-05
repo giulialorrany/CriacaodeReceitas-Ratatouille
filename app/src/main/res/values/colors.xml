@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_erva">#2E7D32</color>
+    <color name="laranja_energetico">#EF6C00</color>
+    <color name="branco_quente">#F8F9FA</color>
+    <color name="branco_puro">#FFFFFF</color>
+    <color name="verde_escuro">#1B5E20</color>
+    <color name="laranja_escuro">#E65100</color>
+    <color name="preto">#000000</color>
+    <color name="verde_claro">#50a166</color>
+    <color name="laranja_toolbar">#fa8b1b</color>
+    <color name="verde_toolbar">#3d9441</color>
+</resources>

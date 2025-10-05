@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Ratatouille</string>
+    <string name="input_title">Ingredientes disponíveis em casa</string>
+    <string name="input_hint">Digite os ingredientes e quantidades (ex: tomate: 2 unidades, cebola: 100g)</string>
+    <string name="search_button">Buscar Receitas</string>
+    <string name="results_title">Receitas que você pode fazer</string>
+    <string name="recipe_name">Nome da Receita</string>
+    <string name="ingredients_label">Ingredientes Necessários</string>
+    <string name="steps_label">Passos</string>
+    <string name="favorites_title">Receitas Favoritadas</string>
+    <string name="nav_search">Buscar</string>
+    <string name="nav_favorites">Favoritos</string>
+    <string name="ratatouille">Ratatouille</string>
+</resources>
