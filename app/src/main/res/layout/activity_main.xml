@@ -46,34 +46,65 @@
         android:hint="@string/input_hint"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_ingredients"
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:gravity="top|start"
-            android:padding="12dp"
-            android:textSize="18sp"
-            android:textColor="@color/preto"
-            android:background="@color/verde_claro" />
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:id="@+id/containerIngredientes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Primeira linha inicial -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <EditText
+                        android:background="@color/verde_claro"
+                        android:id="@+id/inputIngrediente"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:hint="Ingrediente"
+                        android:inputType="text" />
+
+                    <EditText
+                        android:id="@+id/inputQuantidade"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="Qtd"
+                        android:inputType="number"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
 
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    android:background="@color/verde_claro"
 
     <Button
         android:id="@+id/btn_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/search_button"
-        android:textSize="18sp"
-        android:textColor="@color/branco_puro"
         android:backgroundTint="@color/laranja_energetico"
+        android:text="@string/search_button"
+        android:textColor="@color/branco_puro"
+        android:textSize="18sp"
         android:textStyle="bold" />
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
