@@ -25,5 +25,5 @@ recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version
 cardview = { group = "androidx.cardview", name = "cardview", version.ref = "cardview" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version = "8.1.1" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.10" }

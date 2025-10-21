@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ratatouille">
 
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,6 +27,7 @@
 
         <activity android:name=".FavoritesActivity" />
 
+        <uses-permission android:name="android.permission.INTERNET" />
     </application>
 
 </manifest>
