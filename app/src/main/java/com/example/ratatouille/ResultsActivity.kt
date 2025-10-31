@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Intent
+import androidx.room.Room
+import com.example.ratatouille.model.AppDatabase
 import com.example.ratatouille.model.Ingredient
 import com.example.ratatouille.model.RecipeResponse
 
@@ -18,6 +20,7 @@ class ResultsActivity : AppCompatActivity() {
 
     private lateinit var recyclerRecipes: RecyclerView
     private val recipes = mutableListOf<Recipe>()
+    private lateinit var db: AppDatabase
 
     data class Recipe(
         val name: String,
@@ -32,6 +35,8 @@ class ResultsActivity : AppCompatActivity() {
 
         recyclerRecipes = findViewById(R.id.recycler_recipes)
         recyclerRecipes.layoutManager = LinearLayoutManager(this)
+
+        db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "favoritos.db").build()
 
         // Pegar as receitas do intent
         val recipeResponses = intent.getSerializableExtra("recipes") as? ArrayList<RecipeResponse>
