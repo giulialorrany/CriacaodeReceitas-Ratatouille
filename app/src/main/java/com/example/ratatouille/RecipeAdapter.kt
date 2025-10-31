@@ -45,8 +45,10 @@ class RecipeDetailActivity : AppCompatActivity() {
         }
 
         val recipeName = intent.getStringExtra("recipe_name") ?: "Ratatouille"
-        findViewById<TextView>(R.id.tv_recipe_name)?.text = recipeName
-        findViewById<ImageView>(R.id.iv_favorite)?.setImageResource(if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline)
+        if(recipeName != "Ratatouille") {
+            findViewById<TextView>(R.id.tv_recipe_name)?.text = recipeName
+            findViewById<ImageView>(R.id.iv_favorite)?.setImageResource(if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline)
+        }
     }
 
     fun toggleFavorite(view: View) {

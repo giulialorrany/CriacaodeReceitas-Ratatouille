@@ -27,6 +27,8 @@
 
         <activity android:name=".FavoritesActivity" />
 
+        <activity android:name=".RecipeActivity" />
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

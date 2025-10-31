@@ -7,11 +7,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.example.ratatouille.api.ApiClient
+import com.example.ratatouille.model.RecipeResponse
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,25 +58,26 @@ class MainActivity : AppCompatActivity() {
             if (ingredients.isNotEmpty()) {
                 generateRecipes(ingredients)
             } else {
-                // Mostre um Toast: "Digite ingredientes!"
+                Toast.makeText(this, "Digite ingredientes!", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     private fun generateRecipes(ingredients: String) {
-        val apiKey = "1aea402617064353a12a4bbe9e8e64f5" // Coloque sua chave aqui (para testes)
+        val apiKey = "1aea402617064353a12a4bbe9e8e64f5"
 
-        GlobalScope.launch(Dispatchers.IO) { // Chamada em background
+        lifecycleScope.launch(Dispatchers.IO) {
             val call = ApiClient.service.findRecipesByIngredients(ingredients, 10, apiKey)
             try {
-                val response = call.execute() // Executa a chamada
+                val response = call.execute()
                 if (response.isSuccessful) {
-                    val recipes = response.body() // Lista de RecipeResponse
-                    launch(Dispatchers.Main) { // Volta pra UI
-                        // Aqui, atualize a UI: exiba as receitas em uma RecyclerView
-                        Log.d("Recipes", recipes.toString()) // Para testes, veja no Logcat
-                        // Exemplo: recipes[0].title -> "Apple Pie"
-                        // Mostre em TextView ou lista
+                    val recipes = response.body()
+
+                    if (!recipes.isNullOrEmpty()) {
+                        withContext(Dispatchers.Main) {
+                            val intent = Intent(this@MainActivity, ResultsActivity::class.java)
+                            intent.putExtra("recipes", ArrayList(recipes))
+                            startActivity(intent)
+                        }
                     }
                 } else {
                     Log.e("Error", "Falha: ${response.code()}")
