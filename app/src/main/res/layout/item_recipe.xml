@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/branco_quente">
 
-    <!-- Toolbar no topo -->
+    <!-- Toolbar FIXA no topo -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -23,96 +23,114 @@
             android:gravity="center" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- CardView com o conteúdo da receita -->
-    <androidx.cardview.widget.CardView
+    <!-- SCROLL DO MEIO (CardView) -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/verde_claro"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/content_layout"
+            <!-- CardView com o conteúdo da receita -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_margin="16dp"
+                app:cardBackgroundColor="@color/verde_claro"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-                <TextView
-                    android:id="@+id/tv_recipe_name"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/recipe_name"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/laranja_escuro" />
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/tv_ingredients"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/ingredients_label"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/branco_puro" />
+                    <LinearLayout
+                        android:id="@+id/content_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_ingredients_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Lista mockada de ingredientes com quantidades"
-                    android:textSize="16sp"
-                    android:textColor="@color/branco_puro" />
+                        <TextView
+                            android:id="@+id/tv_recipe_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/recipe_name"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/laranja_escuro" />
 
-                <TextView
-                    android:id="@+id/tv_steps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/steps_label"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/branco_puro" />
+                        <TextView
+                            android:id="@+id/tv_ingredients"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/ingredients_label"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/branco_puro" />
 
-                <TextView
-                    android:id="@+id/tv_steps_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="Passos mockados da receita."
-                    android:textSize="16sp"
-                    android:textColor="@color/branco_puro" />
+                        <TextView
+                            android:id="@+id/tv_ingredients_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Lista mockada de ingredientes com quantidades"
+                            android:textSize="16sp"
+                            android:textColor="@color/branco_puro" />
 
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/tv_steps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/steps_label"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/branco_puro" />
 
-            <ImageView
-                android:id="@+id/iv_favorite"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/content_layout"
-                android:src="@drawable/ic_heart_outline"
-                android:contentDescription="Favoritar receita"
-                app:tint="#FF0000"
-                android:onClick="toggleFavorite" />
+                        <TextView
+                            android:id="@+id/tv_steps_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Passos mockados da receita."
+                            android:textSize="16sp"
+                            android:textColor="@color/branco_puro" />
 
-        </RelativeLayout>
+                    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+                    <ImageView
+                        android:id="@+id/iv_favorite"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignBottom="@id/content_layout"
+                        android:src="@drawable/ic_heart_outline"
+                        android:contentDescription="Favoritar receita"
+                        app:tint="#FF0000"
+                        android:onClick="toggleFavorite" />
 
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Espaço extra para rolar até o fim -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="80dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- BottomNavigation FIXA no rodapé -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="370dp"
         android:background="@drawable/bottom_nav_background"
         app:itemIconTint="@color/laranja_energetico"
         app:itemTextColor="@color/branco_puro"

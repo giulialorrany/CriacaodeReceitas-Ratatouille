@@ -27,5 +27,5 @@ cardview = { group = "androidx.cardview", name = "cardview", version.ref = "card
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 
 [plugins]
-android-application = { id = "com.android.application", version = "8.9.1" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "1.9.10" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
