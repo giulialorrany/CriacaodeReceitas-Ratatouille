@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar  // ← ADICIONADO
 import androidx.lifecycle.lifecycleScope
 import com.example.ratatouille.api.ApiClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -21,6 +22,12 @@ class RecipeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.item_recipe)
 
+        // CORRIGIDO: Toolbar configurada
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+
         tvRecipeName = findViewById(R.id.tv_recipe_name)
         tvIngredientsList = findViewById(R.id.tv_ingredients_list)
         tvStepsList = findViewById(R.id.tv_steps_list)
@@ -35,27 +42,13 @@ class RecipeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_favorites -> true
-                else -> {
-                    // Navegação manual para outras atividades
-                    when (item.itemId) {
-                        R.id.nav_search -> {
-                            startActivity(Intent(this, ResultsActivity::class.java))
-                            true
-                        }
-                        R.id.nav_favorites -> {
-                            startActivity(Intent(this, RecipeDetailActivity::class.java))
-                            true
-                        }
-                    }
-                    false
-                }
+                else -> false
             }
         }
 
         // receber Id e Nome da receita
         val recipeId = intent.getIntExtra("recipe_id", 0)
         val recipeName = intent.getStringExtra("recipe_name") ?: "Recipe"
-
         tvRecipeName.text = recipeName
 
         if (recipeId != 0) {
@@ -65,39 +58,37 @@ class RecipeActivity : AppCompatActivity() {
         }
     }
 
+    // CORRIGIDO: função FORA do onCreate
+    override fun onSupportNavigateUp(): Boolean {
+        val intent = Intent(this, ResultsActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
+        return true
+    }
+
     private fun loadRecipeInstructions(recipeId: Int) {
         val apiKey = "1aea402617064353a12a4bbe9e8e64f5"
-
         lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val instructions = ApiClient.service.getAnalyzedRecipeInstructions(recipeId, apiKey)
-
-                // ingredientes
                 val ingredientNames = instructions
                     .flatMap { it.steps }
                     .flatMap { it.ingredients ?: emptyList() }
                     .mapNotNull { it.name }
                     .distinct()
-
-                // descrição dos passos
                 val stepStrings = instructions
                     .flatMap { it.steps }
                     .sortedBy { it.number }
                     .map { "${it.number}. ${it.step}" }
 
-                // atualizar UI
                 withContext(Dispatchers.Main) {
                     tvIngredientsList.text = if (ingredientNames.isNotEmpty())
                         ingredientNames.joinToString("\n") { "- $it" }
-                    else
-                        "No ingredients found."
-
+                    else "No ingredients found."
                     tvStepsList.text = if (stepStrings.isNotEmpty())
                         stepStrings.joinToString("\n\n")
-                    else
-                        "No steps found."
+                    else "No steps found."
                 }
-
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     tvStepsList.text = "Error loading recipe: ${e.message}"

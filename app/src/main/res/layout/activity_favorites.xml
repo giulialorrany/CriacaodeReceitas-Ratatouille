@@ -13,16 +13,20 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/toolbar_background">
+        android:background="@drawable/toolbar_background"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationContentDescription="Voltar"
+        app:title="">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:text="Ratatouille"
             android:textColor="@color/verde_toolbar"
             android:textSize="48sp"
             android:textStyle="bold" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <!-- SCROLL DO MEIO (RecyclerView) -->

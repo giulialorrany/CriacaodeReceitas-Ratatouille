@@ -1,5 +1,6 @@
 package com.example.ratatouille
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.content.Intent
 import androidx.room.Room
 import com.example.ratatouille.model.AppDatabase
 import com.example.ratatouille.model.Ingredient
 import com.example.ratatouille.model.RecipeResponse
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ResultsActivity : AppCompatActivity() {
 
@@ -27,27 +28,30 @@ class ResultsActivity : AppCompatActivity() {
         val id: Int = -1,
         val usedIngredients: List<Ingredient> = emptyList(),
         var missedIngredients: List<Ingredient> = emptyList(),
-        var isFavorite: Boolean = false)
+        var isFavorite: Boolean = false
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_results)
+
+        // CORRIGIDO: usando androidx.appcompat.widget.Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
 
         recyclerRecipes = findViewById(R.id.recycler_recipes)
         recyclerRecipes.layoutManager = LinearLayoutManager(this)
 
         db = Room.databaseBuilder(applicationContext, AppDatabase::class.java, "favoritos.db").build()
 
-        // Pegar as receitas do intent
         val recipeResponses = intent.getSerializableExtra("recipes") as? ArrayList<RecipeResponse>
 
         if (!recipeResponses.isNullOrEmpty()) {
-            recipes.addAll(recipeResponses.map {Recipe(
-                it.title,
-                it.id,
-                it.usedIngredients,
-                it.missedIngredients
-            )})
+            recipes.addAll(recipeResponses.map {
+                Recipe(it.title, it.id, it.usedIngredients, it.missedIngredients)
+            })
         } else {
             val ingredients = intent.getStringExtra("ingredients") ?: ""
             if (ingredients.isNotEmpty()) {
@@ -56,15 +60,13 @@ class ResultsActivity : AppCompatActivity() {
         }
 
         recyclerRecipes.adapter = RecipeAdapter(recipes) { recipe ->
-            // ação ao clicar em uma receita
             val intent = Intent(this, RecipeDetailActivity::class.java)
             intent.putExtra("recipeName", recipe.name)
             startActivity(intent)
         }
 
-
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
-        bottomNavigation.selectedItemId = R.id.nav_search // Reutilizando nav_search para Results
+        bottomNavigation.selectedItemId = R.id.nav_search
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_search -> true
@@ -72,22 +74,14 @@ class ResultsActivity : AppCompatActivity() {
                     startActivity(Intent(this, FavoritesActivity::class.java))
                     true
                 }
-                else -> {
-                    // Navegação manual para outras atividades
-                    when (item.itemId) {
-                        R.id.nav_search -> {
-                            startActivity(Intent(this, MainActivity::class.java))
-                            true
-                        }
-                        R.id.nav_favorites -> {
-                            startActivity(Intent(this, RecipeDetailActivity::class.java))
-                            true
-                        }
-                    }
-                    false
-                }
+                else -> false
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun toggleFavorite(view: View) {
@@ -113,21 +107,10 @@ class ResultsActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val recipe = recipes[position]
-
-            // Título traduzido
-            holder.tvRecipeName.text = Tradutor.traduzirTitulo(recipe.name)
-
-            // Ingredientes (ajuste conforme os campos do seu modelo Recipe)
+            holder.tvRecipeName.text = recipe.name
             val allIngredients = recipe.usedIngredients + recipe.missedIngredients
             holder.tvIngredientsList.text = allIngredients.joinToString(", ") { it.name }
-
-            // Passos ou instruções (se existirem)
-            // holder.tvStepsList.text = recipe.steps ?: "Passos não disponíveis"
-
-            // Ícone de favorito (placeholder por enquanto)
             holder.ivFavorite.setImageResource(R.drawable.ic_heart_outline)
-
-            // Clique no item
             holder.itemView.setOnClickListener {
                 getRecipeInformation(recipe.id, recipe.name)
             }
@@ -141,6 +124,7 @@ class ResultsActivity : AppCompatActivity() {
             val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
         }
     }
+
     private fun getRecipeInformation(recipeId: Int, recipeName: String) {
         val intent = Intent(this@ResultsActivity, RecipeActivity::class.java)
         intent.putExtra("recipe_id", recipeId)

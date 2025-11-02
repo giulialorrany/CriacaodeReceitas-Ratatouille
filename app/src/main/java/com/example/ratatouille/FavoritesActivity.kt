@@ -1,5 +1,6 @@
 package com.example.ratatouille
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.content.Intent
 
 class FavoritesActivity : AppCompatActivity() {
 
@@ -24,7 +24,12 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        // CORRIGIDO: toolbar só uma vez
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+
         recyclerFavorites = findViewById(R.id.recycler_favorites)
         recyclerFavorites.layoutManager = LinearLayoutManager(this)
         recyclerFavorites.adapter = RecipeAdapter(favoriteRecipes)
@@ -42,22 +47,15 @@ class FavoritesActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_favorites -> true
-                else -> {
-                    // Navegação manual para outras atividades
-                    when (item.itemId) {
-                        R.id.nav_search -> {
-                            startActivity(Intent(this, ResultsActivity::class.java))
-                            true
-                        }
-                        R.id.nav_favorites -> {
-                            startActivity(Intent(this, RecipeDetailActivity::class.java))
-                            true
-                        }
-                    }
-                    false
-                }
+                else -> false
             }
         }
+    }
+
+    // CORRIGIDO: função fora do onCreate
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun toggleFavorite(view: View) {

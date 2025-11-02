@@ -7,20 +7,25 @@
     android:background="@color/branco_quente">
 
     <!-- Toolbar FIXA no topo -->
+    <!-- Toolbar no topo -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/toolbar_background">
+        android:background="@drawable/toolbar_background"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationContentDescription="Voltar"
+        app:title="">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Ratatouille"
             android:textColor="@color/verde_toolbar"
             android:textSize="48sp"
-            android:textStyle="bold"
-            android:gravity="center" />
+            android:textStyle="bold" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <!-- SCROLL DO MEIO (CardView) -->
@@ -99,21 +104,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="Passos mockados da receita."
-                            android:textSize="16sp"
-                            android:textColor="@color/branco_puro" />
+                            android:textColor="@color/branco_puro"
+                            android:textSize="16sp"/>
 
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/iv_favorite"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignBottom="@id/content_layout"
-                        android:src="@drawable/ic_heart_outline"
-                        android:contentDescription="Favoritar receita"
-                        app:tint="#FF0000"
-                        android:onClick="toggleFavorite" />
 
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
