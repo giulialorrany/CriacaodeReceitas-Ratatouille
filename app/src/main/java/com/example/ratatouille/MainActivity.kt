@@ -2,18 +2,16 @@ package com.example.ratatouille
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.content.Intent
 import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import com.example.ratatouille.Tradutor.traduzir
 import com.example.ratatouille.api.ApiClient
-import com.example.ratatouille.model.RecipeResponse
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -26,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val etIngredients: TextInputEditText = findViewById(R.id.edit_ingredients)
         val btnGenerate: Button = findViewById(R.id.btn_search)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
         val bottomNavigation: BottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigation.selectedItemId = R.id.nav_search
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
@@ -54,7 +51,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnGenerate.setOnClickListener {
-            val ingredients = etIngredients.text.toString().trim() // Ex: "maçã,farinha,açúcar"
+            val ingredients = traduzir(etIngredients.text.toString().trim()
+                .replace("\\s*,\\s*".toRegex(), ","),
+                true)
+            // Ex: "maçã ,  farinha , batata doce, açúcar" -> "apple,flour,sweet potato,sugar"
             if (ingredients.isNotEmpty()) {
                 generateRecipes(ingredients)
             } else {

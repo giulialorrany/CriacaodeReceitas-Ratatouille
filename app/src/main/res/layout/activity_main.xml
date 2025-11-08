@@ -50,14 +50,14 @@
             android:id="@+id/edit_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/verde_claro"
+            android:gravity="top|start"
+            android:hint="@string/input_hint"
             android:inputType="textMultiLine"
             android:lines="4"
-            android:gravity="top|start"
             android:padding="12dp"
-            android:textSize="18sp"
             android:textColor="@color/preto"
-            android:background="@color/verde_claro"
-            android:hint="@string/input_hint"/>
+            android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

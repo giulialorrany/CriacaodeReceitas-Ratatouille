@@ -3,7 +3,7 @@ package com.example.ratatouille
 object Tradutor {
 
     // Ingredientes comuns (inglês → português)
-    private val ingredientes = mapOf(
+    private val dicionario = mapOf(
         // Frutas
         "apple" to "maçã", "apples" to "maçãs",
         "banana" to "banana", "bananas" to "bananas",
@@ -16,12 +16,18 @@ object Tradutor {
         "watermelon" to "melancia", "watermelons" to "melancias",
         "pineapple" to "abacaxi", "pineapples" to "abacaxis",
         "mango" to "manga", "mangos" to "mangas",
+        "cherries" to "cerejas", "cherry" to "cereja",
+        "avocados" to "abacates", "avocado" to "abacate",
+        "olives" to "azeitonas", "olive" to "azeitona",
 
         // Vegetais
         "tomatoes" to "tomates", "tomato" to "tomate",
         "onions" to "cebolas", "onion" to "cebola",
+        "shallots" to "chalotas", "shallot" to "chalota",
+        "scallion" to "cebolinha",
         "garlic" to "alho", "cloves" to "dentes", "clove" to "dente",
         "carrots" to "cenouras", "carrot" to "cenoura",
+        "sweet potatoes" to "batatas doce", "sweet potato" to "batata doce",
         "potatoes" to "batatas", "potato" to "batata",
         "lettuce" to "alface",
         "cucumbers" to "pepinos", "cucumber" to "pepino",
@@ -36,7 +42,6 @@ object Tradutor {
         "pasta" to "macarrão",
         "bread" to "pão",
         "flour" to "farinha",
-        "oat" to "aveia", "oats" to "aveia",
         "corn" to "milho",
 
         // Proteínas
@@ -54,28 +59,40 @@ object Tradutor {
         "cream" to "creme de leite", "heavy cream" to "creme de leite fresco",
         "anchovy" to "anchova",
         "shrimps" to "camarões", "shrimp" to "camarão",
+        "breasts" to "peitos", "breast" to "peito",
+        "ribs" to "costelas", "rib" to "costela",
+        "cutlets" to "costeletas", "cutlet" to "costeleta",
 
         // Temperos e ervas
         "salt" to "sal",
         "pepper" to "pimenta",
         "sugar" to "açúcar",
         "honey" to "mel",
-        "oil" to "óleo", "olive oil" to "azeite",
+        "olive oil" to "azeite", "oil" to "óleo",
         "vinegar" to "vinagre",
-        "soy sauce" to "shoyu",
+        "soy sauce" to "shoyu", "soy" to "soja",
         "basil" to "manjericão",
         "parsley" to "salsinha",
         "cilantro" to "coentro",
+        "kale" to "couve",
+        "cauliflower" to "couve-flor",
         "mint" to "hortelã",
         "cinnamon" to "canela",
         "vanilla" to "baunilha",
         "leaves" to "folhas","leaf" to "folha",
         "sage" to "sálvia",
+        "herbs" to "ervas", "herb" to "erva",
+        "spices" to "especiarias", "spice" to "especiaria",
+        "seasoning" to "tempeiro",
+        "sumac" to "sumagre",
+        "arugula" to "rúcula",
+        "oregano" to "orégano",
+        "balsamic" to "balsâmico",
+        "hot sauce" to "molho picante",
 
         // Outros
         "milk" to "leite",
         "water" to "água",
-        "chocolate" to "chocolate",
         "coffee" to "café",
         "tea" to "chá",
         "wine" to "vinho",
@@ -83,6 +100,7 @@ object Tradutor {
         "salad" to "salada",
         "roll-ups" to "enrolados", "roll-up" to "enrolado", "rolls" to "enrolados", "roll" to "enrolado",
         "soup" to "sopa",
+        "stew" to "ensopa",
         "roasted" to "assado",
         "french fries" to "batatas fritas",
         "fried" to "frito",
@@ -99,6 +117,20 @@ object Tradutor {
         "chili" to "pimenta",
         "powder" to "pó",
         "pie" to "torta",
+        "baby" to "broto de",
+        "skillet" to "frigineira",
+        "canned" to "em lata",
+        "juice" to "suco",
+        "broth" to "caldo",
+        "vegetable" to "vegetal",
+
+        // Cores
+        "red" to "vermelho",
+        "green" to "verde",
+        "blue" to "azul",
+        "yellow" to "amarelo",
+        "black" to "preto",
+        "white" to "branco",
 
         // Linguagem
         "of" to "de",
@@ -111,23 +143,21 @@ object Tradutor {
         "savory" to "saboroso",
         "homemade" to "caseiro",
         "old-fashioned" to "antiquado",
+        "any" to "qualquer",
+        "round" to "redondo",
+        "you like" to "que você quiser",
+        "swiss" to "suíço",
+        "greek" to "grego",
+        "w/" to "c/",
+        "w" to "c",
 
         // Animais
         "cow" to "vaca",
         "goat" to "cabra",
+        "oat" to "aveia", "oats" to "aveia",
         "pig" to "porco",
 
-        // Cores
-        "red" to "vermelho",
-        "green" to "verde",
-        "blue" to "azul",
-        "yellow" to "amarelo",
-        "black" to "preto",
-        "white" to "branco"
-    )
-
-    // Unidades
-    private val unidades = mapOf(
+        // Unidades de medida
         "cup" to "xícara", "cups" to "xícaras",
         "tablespoon" to "colher de sopa", "tablespoons" to "colheres de sopa",
         "teaspoon" to "colher de chá", "teaspoons" to "colheres de chá",
@@ -140,23 +170,22 @@ object Tradutor {
         "piece" to "unidade", "pieces" to "unidades"
     )
 
-    // Traduz um ingrediente
-    fun traduzirIngrediente(ing: String): String {
-        val lower = ing.lowercase()
-        return ingredientes[lower] ?: ing
-    }
+    // Traduz texto
+    fun traduzir(texto: String, inverso: Boolean = false): String {
+        var traduzido = texto
 
-    // Traduz uma unidade
-    fun traduzirUnidade(unit: String): String {
-        val lower = unit.lowercase()
-        return unidades[lower] ?: unit
-    }
+        dicionario.forEach { (en, pt) ->
+            val palavraOriginal = if (inverso) pt else en
+            val palavraTraduzida = if (inverso) en else pt
 
-    // Traduz título da receita (ex: "Apple Pie" → "Torta de Maçã")
-    fun traduzirTitulo(titulo: String): String {
-        var traduzido = titulo
-        ingredientes.forEach { (en, pt) ->
-            traduzido = traduzido.replace(en, pt, ignoreCase = true)
+            /*
+             * Para garantir que traduza somente correspondência exata
+             * Ex: evitar "cowboy" -> "vacagaroto"
+             */
+            val regex = "\\s*${Regex.escape(palavraOriginal)}\\s*".toRegex(RegexOption.IGNORE_CASE)
+            traduzido = regex.replace(traduzido) { matchResult ->
+                matchResult.value.replace(palavraOriginal, palavraTraduzida, ignoreCase = true)
+            }
         }
         return traduzido
     }

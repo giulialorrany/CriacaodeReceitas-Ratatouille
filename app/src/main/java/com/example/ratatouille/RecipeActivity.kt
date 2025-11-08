@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar  // ← ADICIONADO
 import androidx.lifecycle.lifecycleScope
+import com.example.ratatouille.Tradutor.traduzir
 import com.example.ratatouille.api.ApiClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,7 @@ class RecipeActivity : AppCompatActivity() {
         // receber Id e Nome da receita
         val recipeId = intent.getIntExtra("recipe_id", 0)
         val recipeName = intent.getStringExtra("recipe_name") ?: "Recipe"
-        tvRecipeName.text = recipeName
+        tvRecipeName.text = traduzir(recipeName)
 
         if (recipeId != 0) {
             loadRecipeInstructions(recipeId)
@@ -66,7 +67,7 @@ class RecipeActivity : AppCompatActivity() {
         return true
     }
 
-    private fun loadRecipeInstructions(recipeId: Int) {
+    fun loadRecipeInstructions(recipeId: Int) {
         val apiKey = "1aea402617064353a12a4bbe9e8e64f5"
         lifecycleScope.launch(Dispatchers.IO) {
             try {
@@ -83,10 +84,10 @@ class RecipeActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     tvIngredientsList.text = if (ingredientNames.isNotEmpty())
-                        ingredientNames.joinToString("\n") { "- $it" }
+                        traduzir(ingredientNames.joinToString("\n") { "- $it" })
                     else "No ingredients found."
                     tvStepsList.text = if (stepStrings.isNotEmpty())
-                        stepStrings.joinToString("\n\n")
+                        traduzir(stepStrings.joinToString("\n\n"))
                     else "No steps found."
                 }
             } catch (e: Exception) {

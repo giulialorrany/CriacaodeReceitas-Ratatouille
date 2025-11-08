@@ -11,6 +11,7 @@ import android.content.Intent
 
 class RecipeDetailActivity : AppCompatActivity() {
 
+    private var recipeId: Int = -1
     private var isFavorite = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +45,10 @@ class RecipeDetailActivity : AppCompatActivity() {
             }
         }
 
+        recipeId = intent.getIntExtra("recipe_id", -1)
         val recipeName = intent.getStringExtra("recipe_name") ?: "Ratatouille"
-        if(recipeName != "Ratatouille") {
+        val isFavorite = intent.getBooleanExtra("is_favorite", false)
+        if(recipeId != -1) {
             findViewById<TextView>(R.id.tv_recipe_name)?.text = recipeName
             findViewById<ImageView>(R.id.iv_favorite)?.setImageResource(if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_outline)
         }
