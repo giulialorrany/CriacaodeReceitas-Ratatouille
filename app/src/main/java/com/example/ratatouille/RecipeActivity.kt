@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar  // ← ADICIONADO
 import androidx.lifecycle.lifecycleScope
-import com.example.ratatouille.Tradutor.traduzir
 import com.example.ratatouille.api.ApiClient
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +49,7 @@ class RecipeActivity : AppCompatActivity() {
         // receber Id e Nome da receita
         val recipeId = intent.getIntExtra("recipe_id", 0)
         val recipeName = intent.getStringExtra("recipe_name") ?: "Recipe"
-        tvRecipeName.text = traduzir(recipeName)
+        tvRecipeName.text = recipeName
 
         if (recipeId != 0) {
             loadRecipeInstructions(recipeId)
@@ -84,10 +83,10 @@ class RecipeActivity : AppCompatActivity() {
 
                 withContext(Dispatchers.Main) {
                     tvIngredientsList.text = if (ingredientNames.isNotEmpty())
-                        traduzir(ingredientNames.joinToString("\n") { "- $it" })
+                        ingredientNames.joinToString("\n") { "- $it" }
                     else "No ingredients found."
                     tvStepsList.text = if (stepStrings.isNotEmpty())
-                        traduzir(stepStrings.joinToString("\n\n"))
+                        stepStrings.joinToString("\n\n")
                     else "No steps found."
                 }
             } catch (e: Exception) {

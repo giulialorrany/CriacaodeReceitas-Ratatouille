@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import com.example.ratatouille.Tradutor.traduzir
 import com.example.ratatouille.api.ApiClient
 import com.example.ratatouille.model.AppDatabase
 import com.example.ratatouille.model.Favorite
@@ -156,9 +155,9 @@ class ResultsActivity : AppCompatActivity() {
                         // Cria um objeto Favorite
                         val favorite = Favorite(
                             id = recipe.id,
-                            name = traduzir(recipe.name),
-                            ingredients = traduzir(ingredientNames.joinToString(", ")),
-                            steps = traduzir(stepStrings.joinToString("\n\n"))
+                            name = recipe.name,
+                            ingredients = ingredientNames.joinToString(", "),
+                            steps = stepStrings.joinToString("\n\n")
                         )
 
                         // Verifica se é favorito ou não
@@ -192,10 +191,10 @@ class ResultsActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val recipe = recipes[position]
-            holder.tvRecipeName.text = traduzir(recipe.name)
+            holder.tvRecipeName.text = recipe.name
             val allIngredients = recipe.usedIngredients + recipe.missedIngredients
             val allIngredientsStr = allIngredients.joinToString(", ") { it.name }
-            holder.tvIngredientsList.text = traduzir(allIngredientsStr)
+            holder.tvIngredientsList.text = allIngredientsStr
             holder.ivFavorite.setImageResource(R.drawable.ic_heart_outline)
             holder.itemView.setOnClickListener {
                 getRecipeInformation(recipe.id, recipe.name)

@@ -8,7 +8,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.example.ratatouille.Tradutor.traduzir
 import com.example.ratatouille.api.ApiClient
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
@@ -51,9 +50,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnGenerate.setOnClickListener {
-            val ingredients = traduzir(etIngredients.text.toString().trim()
-                .replace("\\s*,\\s*".toRegex(), ","),
-                true)
+            val ingredients = etIngredients.text.toString().trim()
+                .replace("\\s*,\\s*".toRegex(), ",")
             // Ex: "maçã ,  farinha , batata doce, açúcar" -> "apple,flour,sweet potato,sugar"
             if (ingredients.isNotEmpty()) {
                 generateRecipes(ingredients)
